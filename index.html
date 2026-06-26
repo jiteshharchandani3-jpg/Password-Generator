@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A modern, secure password generator with customizable options">
+    <title>Password Generator - Secure & Modern</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background gradient container -->
+    <div class="background-gradient"></div>
+    
+    <!-- Main container -->
+    <main class="container">
+        <!-- Header section -->
+        <header class="header">
+            <h1 class="title">Password Generator</h1>
+            <p class="subtitle">Generate secure passwords with custom options</p>
+            
+            <!-- Theme toggle -->
+            <button class="theme-toggle" aria-label="Toggle dark/light mode" title="Toggle theme">
+                <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                <svg class="moon-icon" viewBox="0 0 24 24" width="20" height="20">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
+        </header>
+
+        <!-- Main card -->
+        <div class="card">
+            <!-- Password display section -->
+            <div class="password-section">
+                <div class="password-display-wrapper">
+                    <input 
+                        type="password" 
+                        id="passwordDisplay" 
+                        class="password-display" 
+                        readonly
+                        placeholder="Click 'Generate' to create a password"
+                        aria-label="Generated password"
+                    >
+                    <button class="password-toggle" id="togglePassword" aria-label="Show/hide password" title="Show/hide password">
+                        <svg class="eye-icon" viewBox="0 0 24 24" width="20" height="20">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Copy button -->
+                <button class="btn btn-copy" id="copyBtn" aria-label="Copy password to clipboard">
+                    <svg viewBox="0 0 24 24" width="18" height="18">
+                        <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                    </svg>
+                    Copy
+                </button>
+            </div>
+
+            <!-- Strength indicator -->
+            <div class="strength-section">
+                <div class="strength-header">
+                    <label>Password Strength</label>
+                    <span class="strength-text" id="strengthText">--</span>
+                </div>
+                <div class="strength-bar-container">
+                    <div class="strength-bar" id="strengthBar"></div>
+                </div>
+                <div class="entropy-info">
+                    <small id="entropyText">Entropy: -- bits</small>
+                </div>
+            </div>
+
+            <!-- Options section -->
+            <div class="options-section">
+                <h2 class="section-title">Customization</h2>
+                
+                <!-- Password length slider -->
+                <div class="slider-group">
+                    <label for="lengthSlider">Password Length</label>
+                    <div class="slider-wrapper">
+                        <input 
+                            type="range" 
+                            id="lengthSlider" 
+                            min="4" 
+                            max="32" 
+                            value="16"
+                            class="slider"
+                            aria-label="Password length"
+                        >
+                        <span class="length-display" id="lengthDisplay">16</span>
+                    </div>
+                </div>
+
+                <!-- Character options -->
+                <div class="checkboxes-group">
+                    <label class="checkbox-label">
+                        <input 
+                            type="checkbox" 
+                            id="uppercase" 
+                            checked
+                            aria-label="Include uppercase letters"
+                        >
+                        <span class="checkbox-text">Uppercase (A-Z)</span>
+                    </label>
+                    
+                    <label class="checkbox-label">
+                        <input 
+                            type="checkbox" 
+                            id="lowercase" 
+                            checked
+                            aria-label="Include lowercase letters"
+                        >
+                        <span class="checkbox-text">Lowercase (a-z)</span>
+                    </label>
+                    
+                    <label class="checkbox-label">
+                        <input 
+                            type="checkbox" 
+                            id="numbers" 
+                            checked
+                            aria-label="Include numbers"
+                        >
+                        <span class="checkbox-text">Numbers (0-9)</span>
+                    </label>
+                    
+                    <label class="checkbox-label">
+                        <input 
+                            type="checkbox" 
+                            id="symbols" 
+                            checked
+                            aria-label="Include symbols"
+                        >
+                        <span class="checkbox-text">Symbols (!@#$%^&*)</span>
+                    </label>
+
+                    <label class="checkbox-label">
+                        <input 
+                            type="checkbox" 
+                            id="excludeSimilar"
+                            aria-label="Exclude similar characters"
+                        >
+                        <span class="checkbox-text">Exclude Similar (i,l,1,L,o,0,O)</span>
+                    </label>
+                </div>
+
+                <!-- Generate type options -->
+                <div class="generate-type-group">
+                    <label>Generate Type</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input 
+                                type="radio" 
+                                name="generateType" 
+                                value="random"
+                                checked
+                                aria-label="Generate random password"
+                            >
+                            <span>Random</span>
+                        </label>
+                        
+                        <label class="radio-label">
+                            <input 
+                                type="radio" 
+                                name="generateType" 
+                                value="pronounceable"
+                                aria-label="Generate pronounceable password"
+                            >
+                            <span>Pronounceable</span>
+                        </label>
+                        
+                        <label class="radio-label">
+                            <input 
+                                type="radio" 
+                                name="generateType" 
+                                value="pin"
+                                aria-label="Generate PIN"
+                            >
+                            <span>PIN</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Error message -->
+                <div class="error-message" id="errorMessage" role="alert" aria-live="polite"></div>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="button-group">
+                <button class="btn btn-primary" id="generateBtn">
+                    Generate Password
+                </button>
+                <button class="btn btn-secondary" id="regenerateBtn">
+                    Regenerate
+                </button>
+            </div>
+
+            <!-- Password history -->
+            <div class="history-section">
+                <div class="history-header">
+                    <h3>Recent Passwords</h3>
+                    <button class="btn-clear-history" id="clearHistoryBtn" title="Clear history">
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
+                        </svg>
+                    </button>
+                </div>
+                <ul class="history-list" id="historyList">
+                    <li class="history-placeholder">No passwords generated yet</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>💡 Tip: Use strong passwords with at least 12 characters for better security</p>
+        </footer>
+    </main>
+
+    <!-- Toast notification -->
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
